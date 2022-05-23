@@ -14,7 +14,7 @@ const PortadaMunicipio = ({ idProvincia , idMunicipio }) => {
                 <Wrapper>
                     <ContainerCiudad>
                         <Nombre size="5em">{ ( data !== null ) ? data.municipio.NOMBRE : <></> }</Nombre>
-                        <Fila bg="orange" >
+                        <Fila >
                             <Fila flow="column" align="flex-start">
                                 <TextoH3>{ ( data !== null ) ? data.stateSky.description : <></> }</TextoH3>
                                 <Fila justify="flex-start">

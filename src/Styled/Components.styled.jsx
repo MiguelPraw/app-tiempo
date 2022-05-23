@@ -133,6 +133,7 @@ export const BotonFlecha = styled.button`
     right: ${ ({ right }) => right || '0' };
     left: ${ ({ left }) => left || '0' };
     height: 100%;
+    width: 4em;
     cursor: pointer;
     padding: 0 .5em;
 
