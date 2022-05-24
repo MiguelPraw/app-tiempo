@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useProvincia } from "../../Hooks/useProvincia.hook";
 import { Card , Fila , Nombre , NombreCiudad , ContainerCiudades , Grados } from "../../Styled/Components.styled";
 
@@ -13,26 +13,30 @@ const SlideProvincia = ({ prov }) => {
     
     return (
         <>
-            <Card>
-                <Fila>
-                    <Nombre className="provincia">{ prov.NOMBRE_PROVINCIA}</Nombre>
-                </Fila>
-                <ContainerCiudades>
-                    {
-                        ( data !== null )
-                        ?   data.ciudades.map( (ciudad , i) => 
-                                <Fila key={ i }>
-                                    <NombreCiudad>{ciudad.name}</NombreCiudad>
-                                    <Fila justify="flex-end">
-                                        <Grados size="1.2em" className="max">{ ciudad.temperatures.max }º</Grados>
-                                        <Grados size="1.2em" className="min">{ ciudad.temperatures.min }º</Grados>
+            <NavLink to={`/provincia/${prov.CODPROV}`}>
+                <Card>
+                    <Fila>
+                        <Nombre className="provincia">{ prov.NOMBRE_PROVINCIA}</Nombre>
+                    </Fila>
+                    <ContainerCiudades>
+                        {
+                            ( data !== null )
+                            ?   data.ciudades.map( (ciudad , i) => 
+                                    <Fila key={ i }>
+                                        <NavLink to={`/municipio/${ciudad.idProvince}/${ciudad.id}`}>
+                                            <NombreCiudad>{ciudad.name}</NombreCiudad>
+                                        </NavLink>
+                                        <Fila justify="flex-end">
+                                            <Grados size="1.2em" className="max">{ ciudad.temperatures.max }º</Grados>
+                                            <Grados size="1.2em" className="min">{ ciudad.temperatures.min }º</Grados>
+                                        </Fila>
                                     </Fila>
-                                </Fila>
-                            )
-                        :   <></>
-                    }
-                </ContainerCiudades>
-            </Card>
+                                )
+                            :   <></>
+                        }
+                    </ContainerCiudades>
+                </Card>
+            </NavLink>
         </>
     )
 }
