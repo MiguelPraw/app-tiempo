@@ -40,9 +40,7 @@ const SliderProvincias = ({ provincias }) => {
         <>
             <ContainerSlider>
                 <Wrapper>
-                    <Slider style={
-                        { "transform" : translateX() }
-                    }>
+                    <Slider style={{ "transform" : translateX() }}>
                         {
                             prov.map( provincia => <SlideProvincia key={ provincia.CODPROV } prov={ provincia } />)
                         }

@@ -7,6 +7,8 @@ export const Header = styled.header`
     justify-content: center;
     align-items: center;
     background: #000000Ff;
+    position: relative;
+    z-index: 5;
 `
 
 export const Navegador = styled.nav`
@@ -36,6 +38,19 @@ export const Elemento = styled.li`
 export const Main = styled.main`
     background: #000000cf;
     min-height: 90vh;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(${ ({ url }) => url || "initial" });
+        background-size: cover;
+        filter: brightness(0.5);
+    }
 `
 
 export const MainCiudad = styled.main`
@@ -61,6 +76,10 @@ export const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(3 , 1fr);
     gap: .5em;
+
+    @media screen and ( max-width: 1000px ) {
+        grid-template-columns: repeat( 1 , 1fr);
+    }
 `
 
 export const Enlace = styled.a`
@@ -68,15 +87,16 @@ export const Enlace = styled.a`
 `
 
 export const Card = styled.article`
+    position: relative;
     background: black;
     padding: 1.5em;
     border-radius: 0.5rem;
     min-width: calc( 1300% / 52);
-    min-height: ${ ({ minHeight }) => minHeight || '362px' };
+    min-height: ${ ({ minHeight }) => minHeight || '370px' };
 
     display: flex;
     flex-flow: column;
-    justify-content: flex-start;
+    justify-content: ${ ({ justify }) => justify || "center" };
     align-items: center;
 
     transition: all .3s ease;
@@ -100,6 +120,15 @@ export const Nombre = styled.h2`
     &.provincia {
         text-decoration: underline;
     }
+
+    &.pronostico::after {
+        content: '';
+        width: 100%;
+        display: block;
+        height: 2px;
+        margin: 2px 0 0 0;
+        background: white;
+    }
 `
 
 export const NombreCiudad = styled.h3`
@@ -115,12 +144,50 @@ export const Fila = styled.div`
     align-items: ${ ({ align }) => align || 'center' };
     gap: ${ ({ gap }) => gap || "1em" };
     padding: ${ ({ padding }) => padding || "0" };
+    margin: ${ ({ margin }) => margin || "0" };
 
     background: ${ ({ bg }) => bg || "transparent" };
+    position: relative;
+    overflow-x: ${ ({ scroll }) => scroll || "auto" };
+    
+    &::-webkit-scrollbar {
+        background: black;
+        border-radius: 0.5rem;
+        height: .7em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: white;
+        border-radius: 0.5rem;
+    }
 
     svg {
         fill: white;
+        width: 2em;
+        height: 2em;
     }
+`
+
+export const Span = styled.span`
+
+    svg {
+        fill: white;
+        width: 2em;
+        height: 2em;
+
+        &.sol {
+            fill: #ffd700;
+        }
+
+        &.noche {
+            fill: lightgrey;
+        }
+
+        &.lluvia {
+            fill: lightblue;
+        }
+    }
+
 `
 
 export const Grados = styled.span`
@@ -191,10 +258,21 @@ export const ContainerCiudades = styled.div`
 
 export const ContainerProvincias = styled.section`
     margin: 4em 0 0 0;
+    position: relative;
 `
 
 export const ContainerProvincia = styled.section`
     margin: 4em 0 0 0;
+    position: relative;
+`
+
+export const Container = styled.section`
+    margin: 4em 0 0 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 `
 
 export const ContainerCiudad = styled.section`
@@ -202,7 +280,7 @@ export const ContainerCiudad = styled.section`
     flex-flow: column;
     justify-content: space-around;
     align-items: flex-start;
-    height: 90vh;
+    min-height: 90vh;
     position: relative;
 `
 
@@ -219,6 +297,37 @@ export const Provincias = styled.ul`
 
     gap: 1em;
     margin: 4em 0;
+`
+
+export const Municipios = styled.ul`
+
+    /* display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start; */
+    
+    display: grid;
+    grid-template-columns: repeat( 3 , 1fr);
+
+    @media screen and ( max-width: 720px) {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    gap: 1em;
+    margin: 2em 0;
+    
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 1s ease;
+
+    &.activo {
+        opacity: 1;
+        height: 100%;
+    }
 `
 
 export const Provincia = styled.li`
@@ -238,6 +347,54 @@ export const Provincia = styled.li`
     }
 `
 
+export const Municipio = styled.li`
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    background: black;
+    padding: 1em 2em;
+
+    transition: all .3s ease;
+
+    &:hover {
+        background: #00000052;
+    }
+`
+
+export const BotonMunicipios = styled.button`
+
+    margin: 1em 0 0 0;
+    background: #00000052;
+    padding: .5em 2em;
+    cursor: pointer;
+
+    svg {
+        fill: white;
+        width: 1.5em;
+        height: 1.5em;
+
+        transition: all .5s ease;
+
+        &.activo {
+            transform: rotate(180deg);
+        }
+    }
+`
+
+export const Input = styled.input`
+    background: #000000cf;
+    padding: .5em 2em;
+    border: 1px solid grey;
+    color: white;
+
+    &:focus {
+        outline: none;
+    }
+`
+
 export const Wrapper = styled.div`
     width: 90%;
     max-width: 1200px;
@@ -245,3 +402,39 @@ export const Wrapper = styled.div`
 
     overflow: ${ ({ overflow }) => overflow || 'hidden' };
 `
+
+export const ContainerPronostico = styled.div`
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+
+`
+
+export const CardPronostico = styled.div`
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    min-width: 200px;
+
+    padding: 2em;
+`
+
+export const ContainerCarga = styled.div`
+    display: none;
+
+    &.activo {
+        display: block;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 5;
+        background: black;
+    }
+` 
